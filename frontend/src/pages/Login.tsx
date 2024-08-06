@@ -1,57 +1,82 @@
-// src/pages/Login.tsx
 import React, { useState } from "react";
-import { Form, Button, Container, Card } from "react-bootstrap";
-import "../styles/Login.css"; 
+import { useNavigate } from "react-router-dom";
+import "../styles/Login.css";
+import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
+	const [error, setError] = useState("");
+	const navigate = useNavigate();
 
-	const handleLogin = (event: React.FormEvent) => {
+	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
+		try {
+			const response = await fetch("http://your-backend-api/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email, password }),
+			});
+
+			if (!response.ok) {
+				throw new Error("Login failed");
+			}
+
+			const data = await response.json();
+			localStorage.setItem("token", data.token);
+			localStorage.setItem("user", JSON.stringify(data.user));
+
+			navigate("/dashboard");
+		} catch (error) {
+			setError("Invalid email or password.");
+		}
 	};
 
 	return (
-		<div className="login-container">
-			<Container className="d-flex justify-content-center align-items-center vh-100">
-				<Card className="login-card shadow-lg">
-					<Card.Body>
-						<h2 className="text-center mb-4">Login</h2>
-						<Form onSubmit={handleLogin}>
-							<Form.Group controlId="formEmail" className="mb-3">
-								<Form.Label>Email address</Form.Label>
-								<Form.Control
-									type="email"
-									placeholder="Enter email"
-									value={email}
-									onChange={e => setEmail(e.target.value)}
-									className="input-field"
-								/>
-							</Form.Group>
-
-							<Form.Group controlId="formPassword" className="mb-3">
-								<Form.Label>Password</Form.Label>
-								<Form.Control
-									type="password"
-									placeholder="Password"
-									value={password}
-									onChange={e => setPassword(e.target.value)}
-									className="input-field"
-								/>
-							</Form.Group>
-
-							<Button variant="primary" type="submit" className="w-100">
-								Login
-							</Button>
-						</Form>
-						<p className="text-center mt-3">
-							<a href="/forgot-password" className="text-decoration-none">
-								Forgot password?
-							</a>
-						</p>
-					</Card.Body>
-				</Card>
-			</Container>
+		<div className="login-page">
+			<div className="login-form-container">
+				<form className="login-form" onSubmit={handleLogin}>
+					<h2>Login</h2>
+					{error && <p className="error-message">{error}</p>}
+					<div className="input-container">
+						<FaUser className="icon" />
+						<input
+							type="text"
+							placeholder="Email"
+							value={email}
+							onChange={e => setEmail(e.target.value)}
+							required
+						/>
+					</div>
+					<div className="input-container">
+						<input
+							type={showPassword ? "text" : "password"}
+							placeholder="Password"
+							value={password}
+							onChange={e => setPassword(e.target.value)}
+							required
+						/>
+						{showPassword ? (
+							<FaEyeSlash className="eye-icon" onClick={() => setShowPassword(false)} />
+						) : (
+							<FaEye className="eye-icon" onClick={() => setShowPassword(true)} />
+						)}
+					</div>
+					<div className="options-container">
+						<label>
+							<input type="checkbox" />
+							Remember me
+						</label>
+						<a href="/forgot-password" className="forgot-password">
+							Forgot password?
+						</a>
+					</div>
+					<button type="submit" className="login-button">
+						Login
+					</button>
+				</form>
+			</div>
 		</div>
 	);
 };

@@ -1,51 +1,139 @@
-/* src/pages/Login.css */
-.login-container {
-	background: linear-gradient(to right, #2980b9, #6dd5fa, #ffffff);
-	min-height: 100vh;
+.login-page {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-height: 100vh;
+	width: 100vw;
+	background: url("/src/assets/R35.webp") no-repeat center center/cover;
+	background-size: cover;
+	position: relative;
+	padding: 20px; /* Ensure some padding on mobile for spacing */
+	box-sizing: border-box;
 }
 
-.login-card {
-	width: 100%;
+.login-form-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+	border-radius: 15px;
+	padding: 30px;
 	max-width: 400px;
-	border: none;
-	border-radius: 10px;
+	height: 600px;
+	width: 100%;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+	box-sizing: border-box;
 }
 
-.input-field {
-	border-radius: 30px;
-	padding: 0.5rem 1.5rem;
-	border: 1px solid #ddd;
+.login-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex-grow: 1;
 }
 
-.input-field:focus {
-	border-color: #2980b9;
-	box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+.login-form h2 {
+	background: linear-gradient(135deg, rgba(0, 47, 255, 0.6), rgba(4, 0, 4, 0.6));
+	-webkit-background-clip: text; 
+	-moz-background-clip: text; 
+	background-clip: text;
+	color: transparent; 
+	margin-bottom: 30px;
+	text-align: center;
+	font-size: 2rem; 
 }
 
-.card-body h2 {
-	font-size: 1.8rem;
-	color: #2980b9;
+.input-container {
+	display: flex;
+	align-items: center;
+	position: relative;
+	background: linear-gradient(
+		135deg,
+		rgba(233, 149, 71, 0.6),
+		rgba(197, 203, 186, 0.6)
+	); /* Gradient background */
+	border-radius: 25px;
+	padding: 10px;
+	margin-bottom: 20px;
 }
 
-.card-body .btn-primary {
-	background-color: #2980b9;
-	border: none;
-	border-radius: 30px;
-	padding: 0.5rem;
+.input-container input {
+	flex: 1;
+	background: transparent;
+	border: none; /* Remove border */
+	color: white;
+	font-size: 16px;
+	padding: 10px 15px;
+	border-radius: 25px;
+	box-sizing: border-box;
+	outline: none;
 }
 
-.card-body .btn-primary:hover {
-	background-color: #21618c;
+.input-container input::placeholder {
+	color: white;
 }
 
-.card-body .text-center a {
-	color: #2980b9;
-	font-size: 0.9rem;
+.input-container .icon {
+	position: absolute;
+	right: 15px;
+	color: rgba(255, 255, 255, 0.8);
+	pointer-events: none; /* Prevent icon from being interactive */
+	font-size: 18px;
 }
 
-.card-body .text-center a:hover {
+.options-container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+}
+
+.options-container .forgot-password {
+	color: white;
 	text-decoration: underline;
+}
+
+.login-button {
+	background-color: white;
+	border: none;
+	border-radius: 25px;
+	padding: 10px;
+	font-size: 16px;
+	color: #333;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	margin-top: 20px;
+}
+
+.login-button:hover {
+	background-color: #e0e0e0;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+	.login-form-container {
+		padding: 20px;
+		max-width: 100%;
+		height: auto; /* Allow height to adjust on mobile */
+	}
+
+	.login-form h2 {
+		font-size: 24px;
+		margin-bottom: 20px;
+	}
+
+	.input-container {
+		margin-bottom: 15px;
+	}
+
+	.options-container {
+		flex-direction: column;
+		align-items: flex-start;
+		margin-bottom: 20px;
+	}
+
+	.options-container .forgot-password {
+		margin-top: 10px;
+	}
 }
