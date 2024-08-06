@@ -35,13 +35,13 @@
 
 .login-form h2 {
 	background: linear-gradient(135deg, rgba(0, 47, 255, 0.6), rgba(4, 0, 4, 0.6));
-	-webkit-background-clip: text; 
-	-moz-background-clip: text; 
+	-webkit-background-clip: text;
+	-moz-background-clip: text;
 	background-clip: text;
-	color: transparent; 
+	color: transparent;
 	margin-bottom: 30px;
 	text-align: center;
-	font-size: 2rem; 
+	font-size: 2rem;
 }
 
 .input-container {
@@ -136,4 +136,14 @@
 	.options-container .forgot-password {
 		margin-top: 10px;
 	}
+}
+
+.logo-container {
+	text-align: center;
+	margin-bottom: 20px; /* Space between the logo and the form */
+}
+
+.logo {
+	max-width: 30%; 
+	height: auto; 
 }

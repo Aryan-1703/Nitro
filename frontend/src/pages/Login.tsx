@@ -36,6 +36,9 @@ const Login: React.FC = () => {
 	return (
 		<div className="login-page">
 			<div className="login-form-container">
+				<div className="logo-container">
+					<img src="/src/assets/App.png" alt="Your Logo" className="logo" />
+				</div>
 				<form className="login-form" onSubmit={handleLogin}>
 					<h2>Login</h2>
 					{error && <p className="error-message">{error}</p>}
