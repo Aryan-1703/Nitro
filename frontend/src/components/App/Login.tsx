@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../../styles/Login.css";
 import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
+import { LocationState } from "../../types/LocationState";
 
 const Login: React.FC = () => {
 	const [email, setEmail] = useState("");
@@ -9,7 +10,11 @@ const Login: React.FC = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
-	const location = useLocation(); // Get the current location
+	const location = useLocation();
+
+	// Cast location.state to the defined type
+	const state = location.state as LocationState;
+	const from = state?.from || "/home"; // Use the type-casted state
 
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -20,11 +25,8 @@ const Login: React.FC = () => {
 				body: JSON.stringify({ email, password }),
 			});
 
-			console.log("Response status:", response.status);
-
 			if (!response.ok) {
-				const errorData = await response.json();
-				console.error("Error details:", errorData);
+				// const errorData = await response.json();
 				throw new Error("Login failed");
 			}
 
@@ -32,14 +34,12 @@ const Login: React.FC = () => {
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("user", JSON.stringify(data.user));
 
-			const from = location.state?.from?.pathname || "/Home";
-			navigate(from);
+			navigate(from); // Redirect to the saved location or default to /home
 		} catch (error) {
 			console.error("Login error:", error);
 			setError("Invalid email or password.");
 		}
 	};
-
 
 	return (
 		<div className="login-page">
