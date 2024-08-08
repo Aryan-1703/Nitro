@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/Login.css";
 import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -9,17 +9,22 @@ const Login: React.FC = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+	const location = useLocation(); // Get the current location
 
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
 		try {
-			const response = await fetch("http://your-backend-api/login", {
+			const response = await fetch("http://localhost:5000/users", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email, password }),
 			});
 
+			console.log("Response status:", response.status);
+
 			if (!response.ok) {
+				const errorData = await response.json();
+				console.error("Error details:", errorData);
 				throw new Error("Login failed");
 			}
 
@@ -27,11 +32,14 @@ const Login: React.FC = () => {
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("user", JSON.stringify(data.user));
 
-			navigate("/dashboard");
+			const from = location.state?.from?.pathname || "/Home";
+			navigate(from);
 		} catch (error) {
+			console.error("Login error:", error);
 			setError("Invalid email or password.");
 		}
 	};
+
 
 	return (
 		<div className="login-page">

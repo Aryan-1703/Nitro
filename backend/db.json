@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "email": "test@example.com",
+      "password": "password",
+      "token": "mock-token",
+      "user": {
+        "id": 1,
+        "name": "Test User"
+      },
+      "id": "4ca5"
+    },
+    {
+      "id": "701c",
+      "email": "test@example.com",
+      "password": "password"
+    },
+    {
+      "id": "4247",
+      "email": "adf@gmail.com",
+      "password": "ad"
+    },
+    {
+      "id": "54be",
+      "email": "sd",
+      "password": "sd"
+    },
+    {
+      "id": "2f5b",
+      "email": "sdf",
+      "password": "df"
+    }
+  ]
+}
