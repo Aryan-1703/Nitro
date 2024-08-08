@@ -12,9 +12,8 @@ const Login: React.FC = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	// Cast location.state to the defined type
 	const state = location.state as LocationState;
-	const from = state?.from || "/home"; // Use the type-casted state
+	const from = state?.from || "/home";
 
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
@@ -34,7 +33,7 @@ const Login: React.FC = () => {
 			localStorage.setItem("token", data.token);
 			localStorage.setItem("user", JSON.stringify(data.user));
 
-			navigate(from); // Redirect to the saved location or default to /home
+			navigate(from); 
 		} catch (error) {
 			console.error("Login error:", error);
 			setError("Invalid email or password.");
