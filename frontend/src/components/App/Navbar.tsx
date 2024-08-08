@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaHome, FaPhone, FaInfoCircle, FaEnvelope } from "react-icons/fa";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
-import "../styles/NavBar.css";
-import logo from "../assets/App.png";
+import "../../styles/NavBar.css";
+import logo from "../../assets/App.png";
 
 const Sidebar: React.FC = () => {
 	const [collapsed, setCollapsed] = useState(true);
