@@ -1,34 +1,22 @@
 {
   "users": [
     {
+      "id": 1,
       "email": "test@example.com",
-      "password": "password",
-      "token": "mock-token",
+      "password": "password123",
+      "token": "example-token",
       "user": {
-        "id": 1,
         "name": "Test User"
-      },
-      "id": "4ca5"
+      }
     },
     {
-      "id": "701c",
-      "email": "test@example.com",
-      "password": "password"
-    },
-    {
-      "id": "4247",
-      "email": "adf@gmail.com",
-      "password": "ad"
-    },
-    {
-      "id": "54be",
-      "email": "sd",
-      "password": "sd"
-    },
-    {
-      "id": "2f5b",
-      "email": "sdf",
-      "password": "df"
+      "id": 2,
+      "email": "aryan17032@gmail.com",
+      "password": "Aryan17",
+      "token": "example-token",
+      "user": {
+        "name": "Test User"
+      }
     }
   ]
 }

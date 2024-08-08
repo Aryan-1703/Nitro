@@ -14,7 +14,7 @@ const Login: React.FC = () => {
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
 		try {
-			const response = await fetch("http://localhost:5000/users", {
+			const response = await fetch("http://localhost:5000/login", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ email, password }),

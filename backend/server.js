@@ -1,8 +1,9 @@
-const jsonServer = require('json-server');
+import jsonServer from 'json-server';
+import bodyParser from 'body-parser';
+
 const server = jsonServer.create();
 const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
-const bodyParser = require('body-parser');
 
 server.use(bodyParser.json());
 server.use(middlewares);
@@ -10,8 +11,8 @@ server.use(middlewares);
 // Custom authentication route
 server.post('/login', (req, res) => {
     const { email, password } = req.body;
-    const db = router.db;
-    const user = db.get('users').find({ email, password }).value();
+    const db = router.db; // Get the database instance
+    const user = db.get('users').find({ email, password }).value(); // Find user by email and password
 
     if (user) {
         res.json({ token: user.token, user: user.user });
@@ -20,7 +21,10 @@ server.post('/login', (req, res) => {
     }
 });
 
+// Use json-server router for other CRUD operations
 server.use(router);
+
+// Start the server
 server.listen(5000, () => {
-    console.log('JSON Server is running');
+    console.log('JSON Server is running on http://localhost:5000');
 });
