@@ -114,5 +114,8 @@
 
 	.mobile-menu-icon {
 		display: block;
+		width: 100%; /* Ensure it takes up the full width */
+		justify-content: center; /* Center the icon horizontally if using flex */
+		align-items: center; /* Center the icon vertically if using flex */
 	}
 }

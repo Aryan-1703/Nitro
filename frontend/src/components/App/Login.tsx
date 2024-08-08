@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "../styles/Login.css";
+import "../../styles/Login.css";
 import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login: React.FC = () => {
