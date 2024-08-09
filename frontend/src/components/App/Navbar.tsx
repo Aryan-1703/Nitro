@@ -81,7 +81,7 @@ const Sidebar: React.FC = () => {
 					</div>
 					{openDropdown === "claims" && (
 						<div className="dropdown-content">
-							<Link to="/totalloss" className="sidebar-link">
+							<Link to="/Totalloss" className="sidebar-link">
 								{!collapsed && <span className="link-text">Total Loss</span>}
 							</Link>
 							<Link to="/repairs" className="sidebar-link">

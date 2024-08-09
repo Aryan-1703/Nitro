@@ -2,20 +2,85 @@ import React, { useEffect, useState } from "react";
 import $ from "jquery";
 import "datatables.net-dt/css/dataTables.dataTables.css";
 import "datatables.net";
+import "datatables.net-select";
+import "datatables.net-buttons/css/buttons.dataTables.css";
+import "datatables.net-buttons";
+import "datatables.net-editor/css/editor.dataTables.css";
+import "datatables.net-editor";
+
+// Import DataTables Editor if necessary
+import "datatables.net-editor/js/dataTables.editor";
 
 const TotalLoss: React.FC = () => {
 	const [role, setRole] = useState<number>(0);
 
 	useEffect(() => {
-		const userRole = parseInt(localStorage.getItem("role") || "0", 10);
+		const userRole = 25; // Or retrieve the actual user role dynamically
 		setRole(userRole);
 
-		const table = $("#lossTable").DataTable({
-			dom: "lBfrtip",
+		const mockData = {
+			data: [
+				{
+					id: 1,
+					dol: "2023-06-12",
+					vehicle: "Audi S5",
+					insurance: "Allstate",
+					towDriver: "John Doe",
+					company: "4Wheels Auto Collision",
+				},
+				{
+					id: 2,
+					dol: "2023-06-15",
+					vehicle: "BMW 3 Series",
+					insurance: "Geico",
+					towDriver: "Jane Smith",
+					company: "ABC Towing",
+				},
+				{
+					id: 3,
+					dol: "2023-06-18",
+					vehicle: "Toyota Corolla",
+					insurance: "State Farm",
+					towDriver: "Mike Johnson",
+					company: "XYZ Recovery",
+				},
+				{
+					id: 4,
+					dol: "2023-07-01",
+					vehicle: "Ford F-150",
+					insurance: "Progressive",
+					towDriver: "Emily Davis",
+					company: "Towing Pro",
+				},
+				{
+					id: 5,
+					dol: "2023-07-05",
+					vehicle: "Honda Civic",
+					insurance: "Liberty Mutual",
+					towDriver: "Chris Brown",
+					company: "4Wheels Auto Collision",
+				},
+			],
+		};
+
+		const editor = new $.fn.dataTable.Editor({
 			ajax: {
-				url: "./totalloss.php",
+				url: "/path/to/your/opsCat.php",
 				type: "POST",
 			},
+			table: "#lossTable",
+			fields: [
+				{ label: "Date Of Loss", name: "dol" },
+				{ label: "Vehicle", name: "vehicle" },
+				{ label: "Insurance", name: "insurance" },
+				{ label: "Tow Driver", name: "towDriver" },
+				{ label: "Company", name: "company" },
+			],
+		});
+
+		const table = $("#lossTable").DataTable({
+			dom: "Bfrtip", // Add 'B' for Buttons
+			data: mockData.data,
 			scrollY: "52vh",
 			scrollCollapse: true,
 			paging: false,
@@ -26,64 +91,42 @@ const TotalLoss: React.FC = () => {
 			],
 			columns: [
 				{ data: "id" },
-				{ data: "category" },
-				{ data: "Ttype" },
-				{
-					data: "cc",
-					render: function (data) {
-						if (data === 1) return "Both";
-						if (data === 2) return "BOCC";
-						return "YCC";
-					},
-				},
-				{ data: "train" },
-				{ data: "ocs" },
+				{ data: "dol" },
+				{ data: "vehicle" },
+				{ data: "insurance" },
+				{ data: "towDriver" },
+				{ data: "company" },
 			],
-			// select: true,
+			select: true,
 			order: [[1, "asc"]],
+			buttons:
+				role >= 25
+					? [
+							{
+								extend: "create",
+								editor: editor,
+								text: "New",
+							},
+							{
+								extend: "edit",
+								editor: editor,
+								text: "Edit",
+							},
+							{
+								extend: "remove",
+								editor: editor,
+								text: "Delete",
+							},
+					]
+					: [],
 		});
 
-		// 	if (role >= 25) {
-		// 		const editor = new $.fn.dataTable.Editor({
-		// 			ajax: "/path/to/your/opsCat.php",
-		// 			table: "#lossTable",
-		// 			fields: [
-		// 				{
-		// 					label: "Category",
-		// 					name: "category",
-		// 				},
-		// 				{
-		// 					label: "Type",
-		// 					name: "Ctype",
-		// 					type: "select",
-		// 					placeholderDisabled: false,
-		// 					placeholder: "Event Type",
-		// 				},
-		// 				{
-		// 					label: "CC",
-		// 					name: "cc",
-		// 					type: "select",
-		// 				},
-		// 				{
-		// 					label: "Train Category",
-		// 					name: "trainEdit",
-		// 					type: "select",
-		// 				},
-		// 				{
-		// 					label: "OCS Category",
-		// 					name: "ocsEdit",
-		// 					type: "select",
-		// 				},
-		// 			],
-		// 		});
-
-		// 		table.button().add(null, { extend: "create", editor: editor });
-		// 		table.button().add(null, { extend: "edit", editor: editor });
-		// 		table.button().add(null, { extend: "remove", editor: editor });
-		// 	}
+		if (role >= 25) {
+			table.buttons().container().appendTo("#lossTable_wrapper .col-md-6:eq(0)");
+		}
 
 		return () => {
-			table.destroy(true);
+			table.destroy();
 		};
 	}, [role]);
 
@@ -93,20 +136,18 @@ const TotalLoss: React.FC = () => {
 				<h1 className="page-title">Total Loss</h1>
 			</header>
 
-			<div id="phaseTable" className="col-10 mx-auto">
-				<table id="lossTable" className="table table-striped">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Date OF Loss</th>
-							<th>Vehicle</th>
-							<th>Insurance</th>
-							<th>Towed By</th>
-							<th>Company</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
+			<table id="lossTable" className="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Date OF Loss</th>
+						<th>Vehicle</th>
+						<th>Insurance</th>
+						<th>Towed By</th>
+						<th>Company</th>
+					</tr>
+				</thead>
+			</table>
 		</div>
 	);
 };
