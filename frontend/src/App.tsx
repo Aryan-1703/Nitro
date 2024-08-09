@@ -7,6 +7,7 @@ import Layout from "./components/App/Layout";
 import PrivateRoute from "./components/App/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
+import TotalLoss from "./pages/TotalLoss";
 
 const AppRoutes: React.FC = () => {
 	return (
@@ -29,6 +30,14 @@ const AppRoutes: React.FC = () => {
 							element={
 								<Layout>
 									<Contact />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/TotalLoss"
+							element={
+								<Layout>
+									<TotalLoss />
 								</Layout>
 							}
 						/>

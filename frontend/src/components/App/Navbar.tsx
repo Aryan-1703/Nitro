@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-	FaHome,
-	FaPhone,
-	FaEnvelope,
-	FaSignOutAlt,
-	FaChevronDown,
-	FaChevronUp,
-} from "react-icons/fa";
-import claims from "../../assets/claims.jpg"
+import { FaHome, FaSignOutAlt, FaChevronDown, FaChevronUp } from "react-icons/fa";
+import claims from "../../assets/claims.png";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
+import { MdAccountBalance } from "react-icons/md";
 import "../../styles/NavBar.css";
 import logo from "../../assets/App.png";
 
@@ -70,7 +64,14 @@ const Sidebar: React.FC = () => {
 						onClick={() => toggleDropdown("claims")}
 						style={{ cursor: "pointer" }}
 					>
-						<FaPhone size={20} />
+						<img
+							src={claims}
+							alt="App Icon"
+							style={{
+								width: collapsed ? "30px" : "40px",
+								transition: "width 0.1s ease-in-out",
+							}}
+						/>
 						{!collapsed && (
 							<>
 								<span className="link-text">Claims</span>
@@ -81,17 +82,15 @@ const Sidebar: React.FC = () => {
 					{openDropdown === "claims" && (
 						<div className="dropdown-content">
 							<Link to="/totalloss" className="sidebar-link">
-								<FaInfoCircle size={20} />
 								{!collapsed && <span className="link-text">Total Loss</span>}
 							</Link>
 							<Link to="/repairs" className="sidebar-link">
-								<FaEnvelope size={20} />
 								{!collapsed && <span className="link-text">Repairs</span>}
 							</Link>
 						</div>
 					)}
 					<Link to="/reach-us" className="sidebar-link">
-						<FaEnvelope size={20} />
+						<MdAccountBalance size={20} />
 						{!collapsed && <span className="link-text">Accounts</span>}
 					</Link>
 					<Link
