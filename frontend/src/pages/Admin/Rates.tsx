@@ -62,11 +62,10 @@ const Rates = () => {
 			],
 		};
 		const table = $("#lossTable").DataTable({
-			dom: "Bfrtip", // Add 'B' for Buttons
+			dom: "Bfrtip",
 			data: mockData.data,
 			scrollY: "52vh",
 			scrollCollapse: true,
-			paging: false,
 			pageLength: 150,
 			lengthMenu: [
 				[150, 200, 250, 300, 400, 500, -1],
