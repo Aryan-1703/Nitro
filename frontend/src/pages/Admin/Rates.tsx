@@ -65,6 +65,7 @@ const Rates = () => {
 			dom: "Bfrtip",
 			data: mockData.data,
 			scrollY: "52vh",
+            scrollX:true,
 			scrollCollapse: true,
 			pageLength: 150,
 			lengthMenu: [
