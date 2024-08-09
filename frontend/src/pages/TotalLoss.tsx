@@ -3,19 +3,14 @@ import $ from "jquery";
 import "datatables.net-dt/css/dataTables.dataTables.css";
 import "datatables.net";
 import "datatables.net-select";
-import "datatables.net-buttons/css/buttons.dataTables.css";
 import "datatables.net-buttons";
-import "datatables.net-editor/css/editor.dataTables.css";
 import "datatables.net-editor";
-
-// Import DataTables Editor if necessary
-import "datatables.net-editor/js/dataTables.editor";
 
 const TotalLoss: React.FC = () => {
 	const [role, setRole] = useState<number>(0);
 
 	useEffect(() => {
-		const userRole = 25; // Or retrieve the actual user role dynamically
+		const userRole = 25;
 		setRole(userRole);
 
 		const mockData = {
