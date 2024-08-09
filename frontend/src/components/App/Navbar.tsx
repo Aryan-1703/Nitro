@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaHome, FaPhone, FaInfoCircle, FaEnvelope, FaSignOutAlt } from "react-icons/fa";
+import {
+	FaHome,
+	FaPhone,
+	FaEnvelope,
+	FaSignOutAlt,
+	FaChevronDown,
+	FaChevronUp,
+} from "react-icons/fa";
+import claims from "../../assets/claims.jpg"
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import "../../styles/NavBar.css";
 import logo from "../../assets/App.png";
@@ -8,9 +16,14 @@ import logo from "../../assets/App.png";
 const Sidebar: React.FC = () => {
 	const [collapsed, setCollapsed] = useState(true);
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
 	const handleMobileMenuToggle = () => {
 		setMobileMenuOpen(!mobileMenuOpen);
+	};
+
+	const toggleDropdown = (dropdown: string) => {
+		setOpenDropdown(openDropdown === dropdown ? null : dropdown);
 	};
 
 	const navigate = useNavigate();
@@ -18,6 +31,8 @@ const Sidebar: React.FC = () => {
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		localStorage.removeItem("user");
+		sessionStorage.removeItem("token");
+		sessionStorage.removeItem("user");
 		navigate("/login");
 	};
 
@@ -50,17 +65,34 @@ const Sidebar: React.FC = () => {
 						<FaHome size={20} />
 						{!collapsed && <span className="link-text">Home</span>}
 					</Link>
-					<Link to="/contact" className="sidebar-link">
+					<div
+						className="sidebar-link"
+						onClick={() => toggleDropdown("claims")}
+						style={{ cursor: "pointer" }}
+					>
 						<FaPhone size={20} />
-						{!collapsed && <span className="link-text">Contact</span>}
-					</Link>
-					<Link to="/about" className="sidebar-link">
-						<FaInfoCircle size={20} />
-						{!collapsed && <span className="link-text">About</span>}
-					</Link>
+						{!collapsed && (
+							<>
+								<span className="link-text">Claims</span>
+								{openDropdown === "claims" ? <FaChevronUp /> : <FaChevronDown />}
+							</>
+						)}
+					</div>
+					{openDropdown === "claims" && (
+						<div className="dropdown-content">
+							<Link to="/totalloss" className="sidebar-link">
+								<FaInfoCircle size={20} />
+								{!collapsed && <span className="link-text">Total Loss</span>}
+							</Link>
+							<Link to="/repairs" className="sidebar-link">
+								<FaEnvelope size={20} />
+								{!collapsed && <span className="link-text">Repairs</span>}
+							</Link>
+						</div>
+					)}
 					<Link to="/reach-us" className="sidebar-link">
 						<FaEnvelope size={20} />
-						{!collapsed && <span className="link-text">Reach Us</span>}
+						{!collapsed && <span className="link-text">Accounts</span>}
 					</Link>
 					<Link
 						to="#"

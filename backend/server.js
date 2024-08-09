@@ -1,7 +1,7 @@
 import jsonServer from "json-server";
 import bodyParser from "body-parser";
 
-import { generateToken } from "./utility/jwtUtils";
+import { generateToken } from "./utility/jwtUtils.js";
 const server = jsonServer.create();
 const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
@@ -22,11 +22,11 @@ server.post("/login", (req, res) => {
 	}
 });
 
-const authenticateToken = require("./authMiddleware");
+import authenticateToken from "./auth/authMiddleware.js";
 
-// Protected route example
-server.get("/protected", authenticateToken, (req, res) => {
-	res.json({ message: "This is a protected route", user: req.user });
+// Example usage in an Express route
+server.get("/protected-route", authenticateToken, (req, res) => {
+	res.json({ message: "You have access!", user: req.user });
 });
 
 // Use json-server router for other CRUD operations

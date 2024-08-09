@@ -1,7 +1,8 @@
-const { verifyToken } = require("./jwtUtils");
+import { verifyToken } from "../utility/jwtUtils.js";
 
 const authenticateToken = (req, res, next) => {
-	const token = req.headers["authorization"]?.split(" ")[1]; 
+	const authHeader = req.headers["authorization"];
+	const token = authHeader && authHeader.split(" ")[1]; 
 
 	if (!token) return res.status(401).json({ error: "No token provided" });
 
@@ -13,4 +14,4 @@ const authenticateToken = (req, res, next) => {
 	next();
 };
 
-module.exports = authenticateToken;
+export default authenticateToken;
