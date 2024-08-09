@@ -2,12 +2,13 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./components/App/Login";
 import Home from "./pages/Home";
-import Contact from "./pages/Contact";
 import Layout from "./components/App/Layout";
 import PrivateRoute from "./components/App/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 import "bootstrap/dist/css/bootstrap.min.css";
-import TotalLoss from "./pages/TotalLoss";
+import TotalLoss from "./pages/Claims/TotalLoss";
+import Accounts from "./pages/Accounts";
+import Rates from "./pages/Admin/Rates";
 
 const AppRoutes: React.FC = () => {
 	return (
@@ -26,18 +27,26 @@ const AppRoutes: React.FC = () => {
 							}
 						/>
 						<Route
-							path="/contact"
-							element={
-								<Layout>
-									<Contact />
-								</Layout>
-							}
-						/>
-						<Route
 							path="/TotalLoss"
 							element={
 								<Layout>
 									<TotalLoss />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/accounts"
+							element={
+								<Layout>
+									<Accounts />
+								</Layout>
+							}
+						/>
+						<Route
+							path="/Rates"
+							element={
+								<Layout>
+									<Rates />
 								</Layout>
 							}
 						/>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaHome, FaSignOutAlt, FaChevronDown, FaChevronUp } from "react-icons/fa";
 import claims from "../../assets/claims.png";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
-import { MdAccountBalance } from "react-icons/md";
+import { MdAccountBalance, MdOutlineAdminPanelSettings } from "react-icons/md";
 import "../../styles/NavBar.css";
 import logo from "../../assets/App.png";
 
@@ -89,10 +89,33 @@ const Sidebar: React.FC = () => {
 							</Link>
 						</div>
 					)}
-					<Link to="/reach-us" className="sidebar-link">
+					<Link to="/accounts" className="sidebar-link">
 						<MdAccountBalance size={20} />
 						{!collapsed && <span className="link-text">Accounts</span>}
 					</Link>
+					<div
+						className="sidebar-link"
+						onClick={() => toggleDropdown("admin")}
+						style={{ cursor: "pointer" }}
+					>
+						<MdOutlineAdminPanelSettings size={20} />
+						{!collapsed && (
+							<>
+								<span className="link-text">Admin</span>
+								{openDropdown === "admin" ? <FaChevronUp /> : <FaChevronDown />}
+							</>
+						)}
+					</div>
+					{openDropdown === "admin" && (
+						<div className="dropdown-content">
+							<Link to="/Rates" className="sidebar-link">
+								{!collapsed && <span className="link-text">Rate Sheet</span>}
+							</Link>
+							<Link to="/repairs" className="sidebar-link">
+								{!collapsed && <span className="link-text">XYZ</span>}
+							</Link>
+						</div>
+					)}
 					<Link
 						to="#"
 						onClick={e => {
