@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaHome, FaPhone, FaInfoCircle, FaEnvelope } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { FaHome, FaPhone, FaInfoCircle, FaEnvelope, FaSignOutAlt } from "react-icons/fa";
 import { IoIosMenu, IoIosClose } from "react-icons/io";
 import "../../styles/NavBar.css";
 import logo from "../../assets/App.png";
@@ -11,6 +11,14 @@ const Sidebar: React.FC = () => {
 
 	const handleMobileMenuToggle = () => {
 		setMobileMenuOpen(!mobileMenuOpen);
+	};
+
+	const navigate = useNavigate();
+
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		localStorage.removeItem("user");
+		navigate("/login");
 	};
 
 	return (
@@ -37,7 +45,6 @@ const Sidebar: React.FC = () => {
 					/>
 					{!collapsed && <span className="sidebar-title">NITRO</span>}
 				</div>
-
 				<div className="menu-container">
 					<Link to="/home" className="sidebar-link">
 						<FaHome size={20} />
@@ -55,8 +62,18 @@ const Sidebar: React.FC = () => {
 						<FaEnvelope size={20} />
 						{!collapsed && <span className="link-text">Reach Us</span>}
 					</Link>
+					<Link
+						to="#"
+						onClick={e => {
+							e.preventDefault();
+							handleLogout();
+						}}
+						className="sidebar-link"
+					>
+						<FaSignOutAlt size={20} />
+						{!collapsed && <span className="link-text">Log Out</span>}
+					</Link>
 				</div>
-
 				{mobileMenuOpen && (
 					<IoIosClose size={30} className="close-icon" onClick={handleMobileMenuToggle} />
 				)}

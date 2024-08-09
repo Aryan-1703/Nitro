@@ -4,7 +4,7 @@
       "id": 1,
       "email": "test@example.com",
       "password": "password123",
-      "token": "example-token",
+      "token": "token1",
       "user": {
         "name": "Test User"
       }
@@ -13,9 +13,9 @@
       "id": 2,
       "email": "aryan17032@gmail.com",
       "password": "Aryan17",
-      "token": "example-token",
+      "token": "generated",
       "user": {
-        "name": "Test User"
+        "name": "Aryan"
       }
     }
   ]

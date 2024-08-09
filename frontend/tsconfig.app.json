@@ -23,5 +23,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "image.d.ts"]
+  "include": ["src", "image.d.ts", "../backend/utility/jwtUtils.ts"]
 }

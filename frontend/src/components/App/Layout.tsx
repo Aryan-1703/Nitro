@@ -1,3 +1,4 @@
+// src/components/App/Layout.tsx
 import React from "react";
 import useAutoLogout from "../../hooks/useAutoLogout";
 import Sidebar from "./Navbar";
@@ -8,14 +9,14 @@ type LayoutProps = {
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-	useAutoLogout(); 
+	useAutoLogout();
 
 	return (
-		<div>
+		<div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
 			<div className="mobile-menu-icon">
 				<IoIosMenu />
 			</div>
-			<div style={{ display: "flex" }}>
+			<div style={{ display: "flex", flex: 1 }}>
 				<Sidebar />
 				<div style={{ flex: 1, padding: "20px" }}>{children}</div>
 			</div>

@@ -9,6 +9,7 @@ const Login: React.FC = () => {
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
+	const [rememberMe, setRememberMe] = useState(false);
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -25,15 +26,20 @@ const Login: React.FC = () => {
 			});
 
 			if (!response.ok) {
-				// const errorData = await response.json();
 				throw new Error("Login failed");
 			}
 
 			const data = await response.json();
-			localStorage.setItem("token", data.token);
-			localStorage.setItem("user", JSON.stringify(data.user));
 
-			navigate(from); 
+			if (rememberMe) {
+				localStorage.setItem("token", data.token);
+				localStorage.setItem("user", JSON.stringify(data.user));
+			} else {
+				sessionStorage.setItem("token", data.token); // Use sessionStorage for temporary storage
+				sessionStorage.setItem("user", JSON.stringify(data.user));
+			}
+
+			navigate(from);
 		} catch (error) {
 			console.error("Login error:", error);
 			setError("Invalid email or password.");
@@ -75,7 +81,11 @@ const Login: React.FC = () => {
 					</div>
 					<div className="options-container">
 						<label>
-							<input type="checkbox" />
+							<input
+								type="checkbox"
+								checked={rememberMe}
+								onChange={() => setRememberMe(!rememberMe)}
+							/>
 							Remember me
 						</label>
 						<a href="/forgot-password" className="forgot-password">
