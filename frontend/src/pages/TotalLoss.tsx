@@ -17,19 +17,21 @@ const TotalLoss: React.FC = () => {
 			data: [
 				{
 					id: 1,
-					dol: "2023-06-12",
+					dol: "2024-06-12",
 					vehicle: "Audi S5",
 					insurance: "Allstate",
 					towDriver: "John Doe",
 					company: "4Wheels Auto Collision",
+					released: "2024-06-13",
 				},
 				{
 					id: 2,
-					dol: "2023-06-15",
+					dol: "2024-02-15",
 					vehicle: "BMW 3 Series",
 					insurance: "Geico",
 					towDriver: "Jane Smith",
 					company: "ABC Towing",
+					released: "2024-03-12",
 				},
 				{
 					id: 3,
@@ -38,14 +40,16 @@ const TotalLoss: React.FC = () => {
 					insurance: "State Farm",
 					towDriver: "Mike Johnson",
 					company: "XYZ Recovery",
+					released: "2024-06-18",
 				},
 				{
 					id: 4,
-					dol: "2023-07-01",
+					dol: "2024-07-01",
 					vehicle: "Ford F-150",
 					insurance: "Progressive",
 					towDriver: "Emily Davis",
 					company: "Towing Pro",
+					released: "",
 				},
 				{
 					id: 5,
@@ -54,24 +58,25 @@ const TotalLoss: React.FC = () => {
 					insurance: "Liberty Mutual",
 					towDriver: "Chris Brown",
 					company: "4Wheels Auto Collision",
+					released: "2024-2-12",
 				},
 			],
 		};
 
-		const editor = new $.fn.dataTable.Editor({
-			ajax: {
-				url: "/path/to/your/opsCat.php",
-				type: "POST",
-			},
-			table: "#lossTable",
-			fields: [
-				{ label: "Date Of Loss", name: "dol" },
-				{ label: "Vehicle", name: "vehicle" },
-				{ label: "Insurance", name: "insurance" },
-				{ label: "Tow Driver", name: "towDriver" },
-				{ label: "Company", name: "company" },
-			],
-		});
+		// const editor = new $.fn.dataTable.Editor({
+		// 	ajax: {
+		// 		url: "/path/to/your/opsCat.php",
+		// 		type: "POST",
+		// 	},
+		// 	table: "#lossTable",
+		// 	fields: [
+		// 		{ label: "Date Of Loss", name: "dol" },
+		// 		{ label: "Vehicle", name: "vehicle" },
+		// 		{ label: "Insurance", name: "insurance" },
+		// 		{ label: "Tow Driver", name: "towDriver" },
+		// 		{ label: "Company", name: "company" },
+		// 	],
+		// });
 
 		const table = $("#lossTable").DataTable({
 			dom: "Bfrtip", // Add 'B' for Buttons
@@ -91,29 +96,47 @@ const TotalLoss: React.FC = () => {
 				{ data: "insurance" },
 				{ data: "towDriver" },
 				{ data: "company" },
+				{
+					data: "released",
+					render: function (data) {
+						return data === "" ? "N/A" : data;
+					},
+				},
+				{
+					data: "dol",
+					render: function (data, type, row) {
+						const dolDate = new Date(data);
+						const releasedDate = row.released ? new Date(row.released) : new Date(); 
+						const diffTime = Math.abs(releasedDate.getTime() - dolDate.getTime());
+						const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                        console.log(releasedDate.getTime());
+						const amount = diffDays * 60;
+						return `$${amount}`;
+					},
+				},
 			],
 			select: true,
-			order: [[1, "asc"]],
-			buttons:
-				role >= 25
-					? [
-							{
-								extend: "create",
-								editor: editor,
-								text: "New",
-							},
-							{
-								extend: "edit",
-								editor: editor,
-								text: "Edit",
-							},
-							{
-								extend: "remove",
-								editor: editor,
-								text: "Delete",
-							},
-					]
-					: [],
+			order: [[0, "asc"]],
+			// buttons:
+			// 	role >= 25
+			// 		? [
+			// 				{
+			// 					extend: "create",
+			// 					editor: editor,
+			// 					text: "New",
+			// 				},
+			// 				{
+			// 					extend: "edit",
+			// 					editor: editor,
+			// 					text: "Edit",
+			// 				},
+			// 				{
+			// 					extend: "remove",
+			// 					editor: editor,
+			// 					text: "Delete",
+			// 				},
+			// 		  ]
+			// 		: [],
 		});
 
 		if (role >= 25) {
@@ -140,6 +163,8 @@ const TotalLoss: React.FC = () => {
 						<th>Insurance</th>
 						<th>Towed By</th>
 						<th>Company</th>
+						<th>Released</th>
+						<th>Storage</th>
 					</tr>
 				</thead>
 			</table>
